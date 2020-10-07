@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">AndroidTestDemo</string>
-    <string name="admobappid">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admobappid" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="mutiple_language">Mutiple Language</string>
+    <string name="interstitial_ads">Interstitial Ads</string>
+    <string name="selectlang">Select language</string>
 </resources>

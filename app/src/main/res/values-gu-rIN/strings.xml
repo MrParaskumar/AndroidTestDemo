@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AndroidTestDemo</string>
+    <string name="mutiple_language">મલ્ટીપલ ભાષા</string>
+    <string name="interstitial_ads">ઇન્ટર્સ્ટિશલ જાહેરાતો</string>
+    <string name="selectlang">ભાષા પસંદ કરો</string>
+
+</resources>

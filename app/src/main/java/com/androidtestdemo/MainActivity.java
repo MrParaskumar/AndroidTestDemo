@@ -1,8 +1,13 @@
 package com.androidtestdemo;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,12 +37,13 @@ import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     // admob interstitial ads
     private InterstitialAd mInterstitialAd;
     String MyAdUnitId;
-    Button show_ad;
+    Button show_ad,mutiple_lng;
     // native banner fb ads
     private NativeAdLayout nativeAdLayout;
     private LinearLayout adView;
@@ -49,14 +55,67 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadLocal();
         setContentView(R.layout.activity_main);
         show_ad = findViewById(R.id.show_ad);
+        mutiple_lng =findViewById(R.id.mutiple_lng);
 
         controladmobid();
         mInterstitialAd = new InterstitialAd(this);
         nativebannerfbads();
         AudienceNetworkAds.initialize(this);
         loadNativeAd();
+        mutiplelan();
+    }
+
+    private void mutiplelan() {
+        mutiple_lng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickevent();
+            }
+        });
+    }
+
+    private void clickevent() {
+        final String[] itemlist={"English","Hindi","Gujrati"};
+        AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle(R.string.selectlang);
+        builder.setSingleChoiceItems(itemlist, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (i==0){
+                    setLocale("eng");
+                    recreate();
+                }else if (i==1){
+                    setLocale("hi");
+                    recreate();
+                }else if (i==2){
+                    setLocale("gu");
+                    recreate();
+                }
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alertDialog=builder.create();
+        alertDialog.show();
+    }
+
+    private void setLocale(String locale) {
+        Locale locale1=new Locale(locale);
+        Locale.setDefault(locale1);
+        Configuration configuration= new Configuration();
+        configuration.locale =locale1;
+        getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
+        SharedPreferences.Editor sharedPreferences=getSharedPreferences("Settings",MODE_PRIVATE).edit();
+        sharedPreferences.putString("My_lang",locale);
+        sharedPreferences.apply();
+    }
+
+    public void loadLocal(){
+        SharedPreferences sharedPreferences=getSharedPreferences("Settings", Activity.MODE_PRIVATE);
+        String lang=sharedPreferences.getString("My_lang","");
+        setLocale(lang);
     }
 
     private void controladmobid() {
