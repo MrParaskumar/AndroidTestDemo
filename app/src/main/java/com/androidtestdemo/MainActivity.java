@@ -34,6 +34,7 @@ import com.firebase.client.ValueEventListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.startapp.sdk.adsbase.StartAppAd;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadLocal();
+        StartAppAd.disableSplash();
         setContentView(R.layout.activity_main);
         show_ad = findViewById(R.id.show_ad);
         mutiple_lng =findViewById(R.id.mutiple_lng);
@@ -146,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Log.d("TAG", "The interstitial wasn't loaded yet.");
                     startActivity(new Intent(MainActivity.this,MainActivity2.class));
+                    StartAppAd.showAd(getApplicationContext());
                 }
 
             }
@@ -308,6 +311,12 @@ public class MainActivity extends AppCompatActivity {
         // Register the Title and CTA button to listen for clicks.
         nativeAd.registerViewForInteraction(
                 adsView, nativeAdMedia, nativeAdIcon, clickableViews);
+    }
+
+    @Override
+    public void onBackPressed() {
+        StartAppAd.onBackPressed(this);
+        super.onBackPressed();
     }
 
 }

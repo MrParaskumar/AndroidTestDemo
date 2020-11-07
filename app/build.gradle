@@ -42,5 +42,7 @@ dependencies {
     implementation 'com.firebase:firebase-client-android:2.5.1'
     // facebook ads
     implementation 'com.facebook.android:audience-network-sdk:5.11.0'
+    // startapp ads
+    implementation 'com.startapp:inapp-sdk:4.6.1'
 
 }
